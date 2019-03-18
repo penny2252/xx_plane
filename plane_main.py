@@ -16,7 +16,7 @@ class PlaneGame(object):
     def __creat_sprites(self):
         # 创建背景精灵
         bg1 = BackGround()
-        bg2 = BackGro und(True)
+        bg2 = BackGround(True)
         self.back_group = pygame.sprite.Group(bg1, bg2)
 
     def start_game(self):
