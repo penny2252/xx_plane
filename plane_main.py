@@ -12,13 +12,16 @@ class PlaneGame(object):
         self.clock = pygame.time.Clock()
         # 创建私有方法，精灵和精灵组创建
         self.__creat_sprites()
+        #设置定时器事件——创建敌机
+        pygame.time.set_timer(CREATE_ENEMY_EVENT,1000)
 
     def __creat_sprites(self):
-        # 创建背景精灵
+        # 创建背景精灵和精灵组
         bg1 = BackGround()
         bg2 = BackGround(True)
         self.back_group = pygame.sprite.Group(bg1, bg2)
-
+        #创建敌机精灵组
+        self.enemy_group=pygame.sprite.Group()
     def start_game(self):
         print('kaishi')
         while True:
@@ -38,6 +41,10 @@ class PlaneGame(object):
             # 判断是否退出
             if event.type == pygame.QUIT:
                 PlaneGame.__game_over()
+            elif event.type==CREATE_ENEMY_EVENT:
+                #创建精灵，添加到精灵组
+                enemy=Enemy()
+                self.enemy_group.add(enemy)
 
     def __check_collide(self):
         pass
@@ -45,10 +52,13 @@ class PlaneGame(object):
     def __updat_sprites(self):
         self.back_group.update()
         self.back_group.draw(self.screen)
+        self.enemy_group.update()
+        self.enemy_group.draw(self.screen)
+
 
     @staticmethod
     def __game_over():
-        print('游戏介绍')
+        print('游戏结束')
 
         pygame.quit()
         exit()

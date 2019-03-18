@@ -1,8 +1,12 @@
+import random
 import pygame
 #定义屏幕大小的常量,常量名所有字符大写
 SCREEN_RECT=pygame.Rect(0,0,480,700)
 #定义刷新帧数的常量
 FRAME_PER_SEC=60
+#创建敌机的定时器常量
+CREATE_ENEMY_EVENT=pygame.USEREVENT
+
 class GameSprite(pygame.sprite.Sprite):
     '''飞机大战游戏精灵'''
 
@@ -30,4 +34,13 @@ class BackGround(GameSprite):
         #判断是否移除屏幕，如果移出，图像到屏幕上方
         if self.rect.y>=SCREEN_RECT.height:
             self.rect.y=-self.rect.height
-
+class Enemy(GameSprite):
+    '''敌机精灵'''
+    def __init__(self,is_alt=False):
+        super().__init__('./feiji/enemy1.png')
+        self.rect.x=random.randint(0,480-self.rect.height)
+        self.speed=random.randint(1,2)
+    def update(self):
+        super().update()
+        if self.rect.y>SCREEN_RECT.height:
+            pass
