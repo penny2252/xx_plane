@@ -1,5 +1,5 @@
 import pygame
-
+from plane_sprites import *
 # Rect可以不需要初始化直接应用
 # hero_rect = pygame.Rect(100, 500, 1200, 125)
 # print('%d%d' % hero_rect.size)
@@ -24,6 +24,17 @@ clock=pygame.time.Clock()
 hero_rect=pygame.Rect(200,500,100,124)
 
 
+#创建敌机的精灵
+enemy=GameSprite('./feiji/enemy1.png')
+enemy1=GameSprite('./feiji/enemy1.png',2)
+#创建敌机的精灵组
+enemy_group=pygame.sprite.Group(enemy,enemy1)
+
+
+
+
+
+
 # 游戏循环，意味着游戏循环正式开始
 
 while True:
@@ -39,18 +50,21 @@ while True:
             print('退出游戏')
             pygame.quit()
             exit()
-        elif event.type==pygame.KEYDOWN:
-            if event.key==pygame.K_DOWN:
-                hero_rect.y+=-5
-                screen.blit(hero,hero_rect)
-                pygame.display.update()
-    hero_rect.y+=-5
+
+    hero_rect.y+=-1
     #bottom=y+height
     if hero_rect.bottom<0:
     # if hero_rect.y+hero_rect.height<0:
         hero_rect.y=700
     screen.blit(bg, (0, 0))
     screen.blit(hero,hero_rect)
+
+    #精灵组调用update方法(让组中所有精灵更新位置)
+    # draw方法（让组中所有精灵绘制在屏幕）
+    enemy_group.update()
+    enemy_group.draw(screen)
+
+
     pygame.display.update()
 
 
