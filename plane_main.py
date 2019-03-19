@@ -26,7 +26,7 @@ class PlaneGame(object):
         self.enemy_group = pygame.sprite.Group()
         self.hero = Hero()
         self.hero_group = pygame.sprite.Group(self.hero)
-        self.bullet_group=pygame.sprite.Group()
+
 
     def start_game(self):
         print('kaishi')
@@ -36,7 +36,6 @@ class PlaneGame(object):
             # 事件监听
             self.__event_handler()
             # 碰撞检测
-
             self.__check_collide()
             # 更新绘制精灵
             self.__updat_sprites()
@@ -75,8 +74,13 @@ class PlaneGame(object):
 
 
     def __check_collide(self):
-        pass
-
+        #1子弹摧毁飞机
+        pygame.sprite.groupcollide(self.enemy_group,self.hero.bullets,True,True)
+        #敌机撞毁英雄
+        enemys=pygame.sprite.spritecollide(self.hero,self.enemy_group,True)
+        if len(enemys)>0:
+            self.hero.kill()
+            PlaneGame.__game_over()
     def __updat_sprites(self):
         self.back_group.update()
         self.back_group.draw(self.screen)
